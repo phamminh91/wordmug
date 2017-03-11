@@ -19,7 +19,9 @@
     "preact": "^7.2.0",
     "preact-redux": "^2.0.0",
     "redux": "^3.6.0",
-    "redux-saga": "^0.14.3"
+    "redux-saga": "^0.14.3",
+    "regenerator-runtime": "^0.10.3",
+    "unfetch": "^2.1.2"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
@@ -43,6 +45,7 @@
     "eslint-nibble": "^3.1.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
     "extract-text-webpack-plugin": "^2.1.0",
     "handlebars": "^4.0.6",
     "handlebars-template-loader": "^0.7.0",

@@ -1,16 +1,17 @@
-import { COUNT_DOWN, COUNT_UP } from './actionType';
+import { LOAD_DEF, LOAD_DEF_REQ } from './actionType';
 
-function action(actionType, ...payload) {
+function action(actionType, payload = {}) {
   return {
     type: actionType,
     ...payload
   };
 }
 
-export function countUp() {
-  return action(COUNT_UP);
+export function loadDefinition(word) {
+  return action(LOAD_DEF, { word });
 }
 
-export function countDown() {
-  return action(COUNT_DOWN);
-}
+export const loadDefinitionReq = {
+  ok: (response, word) => action(LOAD_DEF_REQ.OK, { response, word }),
+  err: error => action(LOAD_DEF_REQ.ERR, { error })
+};

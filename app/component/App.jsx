@@ -1,15 +1,38 @@
 import { h, Component } from 'preact';
 import { connect } from 'preact-redux';
 
-import { countUp, countDown } from '../action';
+import { loadDefinition } from '../action';
 
+const WORD = 'guileless';
 class App extends Component {
+  componentWillMount() {
+    this.props.loadDefinition(WORD);
+  }
+
   render() {
+    const { dictionary } = this.props;
+    const entry = dictionary[WORD] || { examples: [] };
+    console.log('entry', entry);
     return (
-      <div>
-        <h2>Count: {this.props.count}</h2>
-        <button onClick={this.props.countUp}>+</button>
-        <button onClick={this.props.countDown}>-</button>
+      <div className="container">
+        <div className="card">
+          <h2 className="word">{WORD}</h2>
+          <div className="definition">
+            {entry.definition || 'loading...'}
+          </div>
+        </div>
+
+        <div className="card">
+          {entry.examples.length
+            ? <ul className="usages">
+                {entry.examples.map((ex, idx) => (
+                  <li className="usage" key={idx}>
+                    {ex}
+                  </li>
+                ))}
+              </ul>
+            : 'loading...'}
+        </div>
       </div>
     );
   }
@@ -17,11 +40,10 @@ class App extends Component {
 
 function mapStateToProps(state) {
   return {
-    count: state.count
+    dictionary: state.dictionary
   };
 }
 
 export default connect(mapStateToProps, {
-  countDown,
-  countUp
+  loadDefinition
 })(App);
