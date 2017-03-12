@@ -3,6 +3,7 @@ import fetch from 'unfetch';
 const oxfordAppId = '06c8d114';
 const oxfordAppKey = 'ffde054d0d7f6e57dd3019c5bdb5bced';
 const oxfordApiUrl = 'https://od-api.oxforddictionaries.com/api/v1/entries/en';
+const owlUrl = 'https://owlbot.info/api/v1/dictionary';
 
 export function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
@@ -26,13 +27,11 @@ function fetchInfo(url, opts) {
 }
 
 export function fetchWordEntry(word) {
-  return fetchInfo(`${oxfordApiUrl}/${word}`, {
+  return fetchInfo(`${owlUrl}/${word}`, {
     method: 'GET',
     credentials: 'include',
     headers: {
-      Accept: 'application/json',
-      app_id: oxfordAppId,
-      app_key: oxfordAppKey
+      Accept: 'application/json'
     }
   });
 }

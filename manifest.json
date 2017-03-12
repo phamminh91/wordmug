@@ -13,7 +13,8 @@
     "http://fonts.googleapis.com/",
     "https://fonts.googleapis.com/",
     "https://od-api.oxforddictionaries.com/",
-    "https://jsonplaceholder.typicode.com/"
+    "https://owlbot.info/api/v1/dictionary",
+    "storage"
   ],
   "browser_action": {
     "default_icon": "assets/128.png"
