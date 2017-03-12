@@ -45,6 +45,15 @@ const baseConfig = {
     ],
   },
 
+  resolve: {
+    alias: {
+      // 'react': 'preact-compat',
+      // 'react-dom': 'preact-compat',
+      // 'react-addons-css-transition-group': 'preact-css-transition-group',
+      // 'react-addons-shallow-compare': 'shallow-compare',
+    },
+  },
+
   plugins: [
     new ExtractTextPlugin('app.[contenthash].css'),
     new webpack.DefinePlugin({
@@ -59,11 +68,12 @@ const baseConfig = {
           "sourceMaps": true,
           "presets": [
             ["es2015", { "loose":true }],
-            "stage-2"
+            "stage-2",
+            "react",
           ],
           "plugins": [
             ["transform-decorators-legacy"],
-            ["transform-react-jsx", { "pragma": "h" }]
+            // ["transform-react-jsx", { "pragma": "h" }]
           ]
         }
       }],

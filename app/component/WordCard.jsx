@@ -1,12 +1,17 @@
-import { h, Component } from 'preact';
-import { connect } from 'preact-redux';
-import TokenInput from 'preact-token-input';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { ReactSelectize, MultiSelect } from 'react-selectize';
 
 import { loadDefinition } from '../action';
 
 const observeDuration = 6000;
 
-class App extends Component {
+class WordCard extends Component {
+  constructor(props) {
+    super(props);
+    this.handleIframeLoad = this.handleIframeLoad.bind(this);
+  }
+
   componentWillMount() {
     const { word } = this.props;
     document.title = `New Tab (${word})`;
@@ -20,7 +25,6 @@ class App extends Component {
   }
 
   render() {
-    let tags = ['new', 'noteworthy', 'tech'];
     const { entry, word } = this.props;
     return (
       <div className="word">
@@ -37,13 +41,46 @@ class App extends Component {
           <div className="word__example">
             {entry.example}
           </div>}
-        <TokenInput value={tags} />
+        <div className="word__tags">
+          <MultiSelect
+            placeholder="Select categories"
+            options={['emotion', 'relationship', 'action'].map(fruit => ({
+              label: fruit,
+              value: fruit
+            }))}
+            autoFocus={false}
+            maxValues={5}
+            onValuesChange={() => {}}
+            transitionEnter={true}
+            transitionLeave={true}
+            createFromSearch = {(options, values, search) => {
+              const labels = values.map(value => value.label);
+
+              if (search.trim().length == 0 || labels.indexOf(search.trim()) != -1)
+                return null;
+
+              return {
+                label: search.trim(),
+                value: search.trim()
+              };
+            }}
+          />
+        </div>
       </div>
     );
   }
 
   componentWillUnmount() {
     clearTimeout(this._timeoutId);
+  }
+
+  handleIframeLoad() {
+    const iframeDom = this._iframe.contentWindow
+        ? this._iframe.contentWindow.document
+        : this._iframe.contentDocument;
+    const $examples = iframeDom.querySelectorAll('.examples.left .voting_li .li_content');
+    const examples = Array.prototype.map.call($examples, d => d.textContent);
+    console.log(examples);
   }
 }
 
@@ -56,4 +93,4 @@ function mapStateToProps(state, props) {
 
 export default connect(mapStateToProps, {
   loadDefinition
-})(App);
+})(WordCard);

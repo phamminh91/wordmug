@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime';
-import { h, render } from 'preact';
-import { Provider } from 'preact-redux';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 
@@ -16,7 +17,7 @@ const storeEnhancer = compose(applyMiddleware(sagaMiddleware));
 const store = createStore(combineReducers(rootReducer), {}, storeEnhancer);
 sagaMiddleware.run(rootSaga);
 
-render(
+ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,

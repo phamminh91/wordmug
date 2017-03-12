@@ -14,7 +14,8 @@
     "https://fonts.googleapis.com/",
     "https://od-api.oxforddictionaries.com/",
     "https://owlbot.info/api/v1/dictionary",
-    "storage"
+    "storage",
+    "identity"
   ],
   "browser_action": {
     "default_icon": "assets/128.png"

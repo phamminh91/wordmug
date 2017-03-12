@@ -1,5 +1,5 @@
-import { h, Component } from 'preact';
-import { connect } from 'preact-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import WordCard from './WordCard.jsx';
 import { loadDefinition } from '../action';
