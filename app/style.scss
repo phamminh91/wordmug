@@ -85,3 +85,23 @@ body, #app {
     font-size: 190%;
   }
 }
+
+.wordmug-progress-bar {
+  font-family: "Lato", "Lucida Grande","Lucida Sans Unicode", Tahoma, Sans-Serif;
+  height: 4px;
+  z-index: 10000;
+  position: fixed;
+  top: 0;
+  width: 0;
+  background-color: lightcoral;
+
+  &--visible {
+    visibility: visible;
+  }
+
+  &__progress {
+    background-color: lightcoral;
+    height: 100%;
+    transition: width .3s;
+  }
+}

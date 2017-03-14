@@ -8,7 +8,7 @@ import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducer';
 import rootSaga from './saga';
 import App from './component/App.jsx';
-import '../css/style.scss';
+import './style.scss';
 
 // Set up store and saga
 const sagaMiddleware = createSagaMiddleware();
@@ -23,3 +23,7 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('app'),
 );
+
+// chrome.tabs.executeScript({
+//   code: 'console.log("hello script")',
+// });

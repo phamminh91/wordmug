@@ -6,6 +6,7 @@ export default function dictionary(state = init, action) {
   switch (action.type) {
     case types.LOAD_DEF_REQ.OK: {
       const response = action.response;
+      console.log('reducer', response);
       if (response && response[0]) {
         const first = response[0];
         return {
@@ -16,9 +17,8 @@ export default function dictionary(state = init, action) {
             example: stripHtmlTags(first.example),
           },
         };
-      } else {
-        return state;
       }
+      return state;
     }
 
     default:

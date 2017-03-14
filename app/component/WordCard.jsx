@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MultiSelect } from 'react-selectize';
 
+import ProgressBar from './ProgressBar.jsx';
 import { loadDefinition, observedWord } from '../action';
 
 const observeDuration = 6000;
@@ -9,7 +10,6 @@ const observeDuration = 6000;
 class WordCard extends Component {
   constructor(props) {
     super(props);
-    this.handleIframeLoad = this.handleIframeLoad.bind(this);
   }
 
   componentWillReceiveProps(nProps) {
@@ -17,6 +17,7 @@ class WordCard extends Component {
     if (nProps.word && word !== nProps.word) {
       document.title = `New Tab (${nProps.word})`;
       this.props.loadDefinition(nProps.word);
+      this._progressBar && this._progressBar.go(80);
       this._timeoutId = setTimeout(
         () => observedWord(nProps.word),
         observeDuration,
@@ -30,6 +31,7 @@ class WordCard extends Component {
 
     return (
       <div className="word">
+        <ProgressBar ref={ref => this._progressBar = ref} />
         <h2 className="word__word">{word}</h2>
         <div className="word__pron-pos">
           <div className="word__pron" />
@@ -53,15 +55,16 @@ class WordCard extends Component {
             autoFocus={false}
             maxValues={5}
             onValuesChange={() => {}}
-            transitionEnter={true}
-            transitionLeave={true}
+            transitionEnter
+            transitionLeave
             createFromSearch={(options, values, search) => {
               const labels = values.map(value => value.label);
 
               if (
                 search.trim().length == 0 || labels.indexOf(search.trim()) != -1
-              )
+              ) {
                 return null;
+              }
 
               return {
                 label: search.trim(),
@@ -83,17 +86,6 @@ class WordCard extends Component {
 
   componentWillUnmount() {
     clearTimeout(this._timeoutId);
-  }
-
-  handleIframeLoad() {
-    const iframeDom = this._iframe.contentWindow
-      ? this._iframe.contentWindow.document
-      : this._iframe.contentDocument;
-    const $examples = iframeDom.querySelectorAll(
-      '.examples.left .voting_li .li_content',
-    );
-    const examples = Array.prototype.map.call($examples, d => d.textContent);
-    console.log(examples);
   }
 }
 

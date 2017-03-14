@@ -3,7 +3,7 @@
 // const firebaseDb = firebaseApp.database();
 
 function setLocal(key, value) {
-  const localPromise = new Promise(resolve => {
+  const localPromise = new Promise((resolve) => {
     chrome.storage.local.set({ [key]: value }, () => resolve());
   });
   // const firebasePromise = firebaseDb.ref().set({
@@ -13,7 +13,7 @@ function setLocal(key, value) {
 }
 
 function getLocal(key) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     chrome.storage.local.get(key, data => resolve(data[key]));
   });
   // return Promise.all([
