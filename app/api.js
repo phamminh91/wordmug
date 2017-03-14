@@ -31,7 +31,7 @@ export function fetchWordEntry(word) {
     method: 'GET',
     credentials: 'include',
     headers: {
-      Accept: 'application/json'
-    }
+      Accept: 'application/json',
+    },
   });
 }

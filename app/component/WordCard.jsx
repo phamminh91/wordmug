@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ReactSelectize, MultiSelect } from 'react-selectize';
+import { MultiSelect } from 'react-selectize';
 
-import { loadDefinition } from '../action';
+import { loadDefinition, observedWord } from '../action';
 
 const observeDuration = 6000;
 
@@ -12,20 +12,22 @@ class WordCard extends Component {
     this.handleIframeLoad = this.handleIframeLoad.bind(this);
   }
 
-  componentWillMount() {
-    const { word } = this.props;
-    document.title = `New Tab (${word})`;
-    this.props.loadDefinition(word);
-    this._timeoutId = setTimeout(
-      () => {
-        console.log('word seen', word);
-      },
-      observeDuration
-    );
+  componentWillReceiveProps(nProps) {
+    const { word, observedWord } = this.props;
+    if (nProps.word && word !== nProps.word) {
+      document.title = `New Tab (${nProps.word})`;
+      this.props.loadDefinition(nProps.word);
+      this._timeoutId = setTimeout(
+        () => observedWord(nProps.word),
+        observeDuration,
+      );
+    }
   }
 
   render() {
     const { entry, word } = this.props;
+    if (!word) return null;
+
     return (
       <div className="word">
         <h2 className="word__word">{word}</h2>
@@ -46,22 +48,24 @@ class WordCard extends Component {
             placeholder="Select categories"
             options={['emotion', 'relationship', 'action'].map(fruit => ({
               label: fruit,
-              value: fruit
+              value: fruit,
             }))}
             autoFocus={false}
             maxValues={5}
             onValuesChange={() => {}}
             transitionEnter={true}
             transitionLeave={true}
-            createFromSearch = {(options, values, search) => {
+            createFromSearch={(options, values, search) => {
               const labels = values.map(value => value.label);
 
-              if (search.trim().length == 0 || labels.indexOf(search.trim()) != -1)
+              if (
+                search.trim().length == 0 || labels.indexOf(search.trim()) != -1
+              )
                 return null;
 
               return {
                 label: search.trim(),
-                value: search.trim()
+                value: search.trim(),
               };
             }}
           />
@@ -70,15 +74,24 @@ class WordCard extends Component {
     );
   }
 
+  componentDidUpdate() {
+    const { word, entry } = this.props;
+    if (entry.definition) {
+      document.title = `${word} - ${entry.definition}`;
+    }
+  }
+
   componentWillUnmount() {
     clearTimeout(this._timeoutId);
   }
 
   handleIframeLoad() {
     const iframeDom = this._iframe.contentWindow
-        ? this._iframe.contentWindow.document
-        : this._iframe.contentDocument;
-    const $examples = iframeDom.querySelectorAll('.examples.left .voting_li .li_content');
+      ? this._iframe.contentWindow.document
+      : this._iframe.contentDocument;
+    const $examples = iframeDom.querySelectorAll(
+      '.examples.left .voting_li .li_content',
+    );
     const examples = Array.prototype.map.call($examples, d => d.textContent);
     console.log(examples);
   }
@@ -87,10 +100,11 @@ class WordCard extends Component {
 function mapStateToProps(state, props) {
   console.log(props);
   return {
-    entry: state.dictionary[props.word] || {}
+    entry: state.dictionary[props.word] || {},
   };
 }
 
 export default connect(mapStateToProps, {
-  loadDefinition
+  loadDefinition,
+  observedWord,
 })(WordCard);

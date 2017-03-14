@@ -1,27 +1,20 @@
 // initialize firebase
-const fireBaseConfig = {
-  apiKey: "AIzaSyAXe19cAYaB_ZlxpcYeoma9P-cu3m31dxM",
-  authDomain: "wordmug-75c35.firebaseapp.com",
-  databaseURL: "https://wordmug-75c35.firebaseio.com",
-  storageBucket: "wordmug-75c35.appspot.com",
-  messagingSenderId: "676553309545"
-};
 // const firebaseApp = firebase.initializeApp(fireBaseConfig);
 // const firebaseDb = firebaseApp.database();
 
-function set(key, value) {
-  // const localPromise = new Promise(resolve => {
-  //   chrome.storage.local.set(items, () => resolve());
-  // });
+function setLocal(key, value) {
+  const localPromise = new Promise(resolve => {
+    chrome.storage.local.set({ [key]: value }, () => resolve());
+  });
   // const firebasePromise = firebaseDb.ref().set({
   //   [key]: value,
   // });
-  return Promise.all([]);
+  return localPromise;
 }
 
-function get(key) {
+function getLocal(key) {
   return new Promise(resolve => {
-    chrome.storage.local.get(key, data => resolve(data));
+    chrome.storage.local.get(key, data => resolve(data[key]));
   });
   // return Promise.all([
   //   new Promise(resolve =>
@@ -33,7 +26,17 @@ function get(key) {
   // ]);
 }
 
+function setSync(key, value) {}
+
+function getSync(key) {}
+
 export default {
-  set,
-  get
+  local: {
+    set: setLocal,
+    get: getLocal,
+  },
+  sync: {
+    set: setSync,
+    get: getSync,
+  },
 };

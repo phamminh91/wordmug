@@ -2,23 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import WordCard from './WordCard.jsx';
-import { loadDefinition } from '../action';
-import wordList from '../wordlist';
-
-const WORD = wordList[Math.floor(Math.random() * wordList.length)];
+import { chooseWord } from '../action';
 
 class App extends Component {
+  componentWillMount() {
+    this.props.chooseWord();
+  }
+
   render() {
-    return <WordCard word={WORD} />;
+    return <WordCard word={this.props.progress.currentWord} />;
   }
 }
 
 function mapStateToProps(state) {
   return {
-    dictionary: state.dictionary
+    progress: state.progress,
   };
 }
 
 export default connect(mapStateToProps, {
-  loadDefinition
+  chooseWord,
 })(App);

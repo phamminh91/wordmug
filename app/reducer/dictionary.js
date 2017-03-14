@@ -1,8 +1,8 @@
-import * as types from './actionType';
+import * as types from '../actionType';
 
 const init = {};
 
-function dictionary(state = init, action) {
+export default function dictionary(state = init, action) {
   switch (action.type) {
     case types.LOAD_DEF_REQ.OK: {
       const response = action.response;
@@ -13,8 +13,8 @@ function dictionary(state = init, action) {
           [action.word]: {
             type: first.type,
             definition: stripHtmlTags(first.defenition),
-            example: stripHtmlTags(first.example)
-          }
+            example: stripHtmlTags(first.example),
+          },
         };
       } else {
         return state;
@@ -25,10 +25,6 @@ function dictionary(state = init, action) {
       return state;
   }
 }
-
-export default {
-  dictionary
-};
 
 // Oxford
 // try {
