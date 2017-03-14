@@ -11,6 +11,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
+const extractAppCSS = new ExtractTextPlugin('app.css');
+const extractContentScriptCSS = new ExtractTextPlugin('contentScript.css');
+
 /** constants **/
 const target = process.env.npm_lifecycle_event;
 const TARGET = {
@@ -23,30 +26,39 @@ const publicPath = '/';
 const baseConfig = {
   entry: {
     app: './app/index.js',
+    contentScript: './contentscript/index.js',
   },
 
   output: {
     path: outputPath,
     publicPath: publicPath,
-    filename: '[name].[contenthash].js',
-    // chunkFilename: "[name].app.[hash].js",
+    filename: '[name].js',
   },
 
   module: {
     rules: [
-      { test: /\.jsx?$/, loader: 'happypack/loader?id=js', include: [/app/, /node_modules/] },
+      { test: /\.jsx?$/, loader: 'happypack/loader?id=js', include: [/app/, /contentscript/, /node_modules/] },
       { test: /\.hbs/, loader: 'handlebars-template-loader' },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-            use: 'css-loader!postcss-loader!sass-loader'
-        })
+        exclude: /contentscript\/.*\.scss$/,
+        use: extractAppCSS.extract({
+            use: ['css-loader', 'postcss-loader', 'sass-loader'],
+        }),
+      },
+      {
+        test: /\.scss$/,
+        exclude: /app\/.*\.scss$/,
+        use: extractContentScriptCSS.extract({
+          use: ['css-loader', 'postcss-loader', 'sass-loader'],
+        }),
       },
     ],
   },
 
   plugins: [
-    new ExtractTextPlugin('app.[contenthash].css'),
+    extractAppCSS,
+    extractContentScriptCSS,
     new webpack.DefinePlugin({
       __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
       'process.env.NODE_ENV': target === TARGET.DEV ? '"dev"' : '"production"',
@@ -100,8 +112,7 @@ module.exports = function(env) {
       output: {
         path: outputPath,
         publicPath: publicPath,
-        filename: '[name].[chunkhash].js',
-        chunkFilename: "[name].app.[chunkhash].js",
+        filename: '[name].js',
       },
       watch: true,
       devtool: 'source-map',
@@ -116,7 +127,7 @@ module.exports = function(env) {
       output: {
         path: outputPath,
         publicPath: publicPath,
-        filename: '[name].[chunkhash].js',
+        filename: '[name].js',
       },
       devtool: 'true', // this is to patch ParallelUglifyPlugin as it expects a `devtool` option explicitly but doesn't care what it is
       plugins: [

@@ -7,10 +7,22 @@ import { chooseWord } from '../action';
 class App extends Component {
   componentWillMount() {
     this.props.chooseWord();
+    this.handleKeyUp = this.handleKeyUp.bind(this);
+    document.addEventListener('keyup', this.handleKeyUp);
   }
 
   render() {
-    return <WordCard word={this.props.progress.currentWord} />;
+    return (
+      <div onKeyUp={e => this.handleKeyUp(e)}>
+        <WordCard word={this.props.progress.currentWord} />
+      </div>
+    );
+  }
+
+  handleKeyUp(e) {
+    if (e.which === 32) {
+      this.props.chooseWord();
+    }
   }
 }
 

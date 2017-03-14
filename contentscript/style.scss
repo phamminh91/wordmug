@@ -1,0 +1,56 @@
+.wordmug-flashcard {
+  z-index: 1000;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 300px;
+  height: 200px;
+  margin: 0;
+  padding: 0;
+  display: flex;
+
+  border: 1px rgba(255, 255, 255, 0.03) solid;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+
+  &__front {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #BA1F53;
+    background: #DDD;
+    cursor: pointer;
+    padding: 10px;
+
+    &:hover {
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+      transition: box-shadow .2s ease-in-out;
+    }
+  }
+
+  &__word {
+    font-size: 30px;
+    font-weight: bold;
+  }
+
+  &__back {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ba9190;
+    background: #EEE;
+    cursor: pointer;
+    padding: 10px;
+  }
+
+  &__explanation {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 15px;
+  }
+}

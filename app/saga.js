@@ -8,7 +8,6 @@ import storage from './storage';
 import wordList from './wordlist';
 
 function* loadDefinition({ word }) {
-  console.log('loaddef', word);
   const tasks = [];
 
   let response = yield storage.local.get(`word:${word}`);
@@ -27,7 +26,7 @@ function* watchLoadDefinition() {
 
 function* chooseWord() {
   const idx = ((yield storage.local.get('currentIdx')) % wordList.length) || 0;
-  console.log('saga:choose', idx);
+  // console.log('saga:choose', idx);
 
   yield [
     put(action.chooseWordReq.ok(wordList[idx])),
