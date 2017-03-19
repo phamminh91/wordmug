@@ -7,10 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --env.env=dev",
     "build": "webpack --env.env=production",
-    "lint": "eslint --fix 'app/**'",
+    "lint": "eslint --fix 'src/**/*.js' 'src/**/*.jsx'",
     "lint-stat": "eslint-nibble 'app/**'",
     "bundle-stat": "webpack --env.env=production --env.bundleStats=true",
-    "prettier": "node ./node_modules/prettier/bin/prettier.js --write --single-quote --trailing-comma all ./app/**/*.js ./app/**/*.jsx"
+    "prettier": "node ./node_modules/prettier/bin/prettier.js --write --single-quote --trailing-comma all ./src/**/*.js ./src/**/*.jsx"
   },
   "author": "",
   "license": "ISC",
@@ -69,6 +69,7 @@
     "postcss-scss": "^0.4.1",
     "precss": "^1.4.0",
     "prettier": "^0.22.0",
+    "prettier-webpack-plugin": "^0.0.2",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.13.1",
     "webpack": "^2.2.1",

@@ -242,6 +242,10 @@ ast-types@0.9.4:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/ast-types/-/ast-types-0.9.4.tgz#410d1f81890aeb8e0a38621558ba5869ae53c91b"
 
+"ast-types@git+https://github.com/jlongster/ast-types.git":
+  version "0.9.3"
+  resolved "git+https://github.com/jlongster/ast-types.git#4b373d7e710105b07b22a12389ef2d8e1bcf2412"
+
 async-each@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/async-each/-/async-each-1.0.1.tgz#19d386a1d9edc6e7c1c85d388aedbcc56d33602d"
@@ -2863,6 +2867,14 @@ flat-cache@^1.2.1:
 flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
+
+flow-parser@0.38.0:
+  version "0.38.0"
+  resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.38.0.tgz#a631c46170c5b42400d905a75cfc83ce8db29424"
+  dependencies:
+    ast-types "0.8.18"
+    colors ">=0.6.2"
+    minimist ">=0.2.0"
 
 flow-parser@0.40.0:
   version "0.40.0"
@@ -5583,6 +5595,25 @@ prettier:
     get-stdin "5.0.1"
     glob "7.1.1"
     jest-validate "19.0.0"
+    minimist "1.2.0"
+
+prettier-webpack-plugin:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/prettier-webpack-plugin/-/prettier-webpack-plugin-0.0.2.tgz#36e0e266495e9d645f462f201f97406dbe10d1e4"
+  dependencies:
+    prettier "^0.11.0"
+
+prettier@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-0.11.0.tgz#23bceac71fc7591da393aa341cd237488c51cfe5"
+  dependencies:
+    ast-types "git+https://github.com/jlongster/ast-types.git"
+    babel-code-frame "6.22.0"
+    babylon "6.15.0"
+    esutils "2.0.2"
+    flow-parser "0.38.0"
+    get-stdin "5.0.1"
+    glob "7.1.1"
     minimist "1.2.0"
 
 pretty-error@^2.0.2:

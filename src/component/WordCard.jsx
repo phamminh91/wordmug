@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { MultiSelect } from 'react-selectize';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { MultiSelect } from "react-selectize";
 
-import ProgressBar from './ProgressBar.jsx';
-import { loadDefinition, observedWord } from '../action';
+import ProgressBar from "./ProgressBar.jsx";
+import { updateTags, loadDefinition, observedWord } from "../action";
 
 const observeDuration = 6000;
 
 class WordCard extends Component {
   constructor(props) {
     super(props);
+    this.state = { tags: [] };
   }
 
   componentWillReceiveProps(nProps) {
@@ -20,13 +21,13 @@ class WordCard extends Component {
       this._progressBar && this._progressBar.go(80);
       this._timeoutId = setTimeout(
         () => observedWord(nProps.word),
-        observeDuration,
+        observeDuration
       );
     }
   }
 
   render() {
-    const { entry, word } = this.props;
+    const { entry, word, updateTags } = this.props;
     if (!word) return null;
 
     return (
@@ -38,38 +39,41 @@ class WordCard extends Component {
           <div className="word__pos">{entry.type}</div>
         </div>
         <div className="word__definition">
-          {entry.definition || 'loading...'}
+          {entry.definition || "loading..."}
         </div>
-
-        {!!entry.example &&
-          <div className="word__example">
-            {entry.example}
-          </div>}
+        {
+          !!entry.example && (
+              <div className="word__example">
+                {entry.example}
+              </div>
+            )
+        }
         <div className="word__tags">
           <MultiSelect
             placeholder="Select categories"
-            options={['emotion', 'relationship', 'action'].map(fruit => ({
-              label: fruit,
-              value: fruit,
+            options={[ "emotion", "relationship", "action" ].map(tag => ({
+              label: tag,
+              value: tag
             }))}
             autoFocus={false}
-            maxValues={5}
-            onValuesChange={() => {}}
+            maxValues={3}
+            onValuesChange={items => {
+              console.log("val changed", items);
+              updateTags(word, items.map(item => item.value));
+            }}
             transitionEnter
             transitionLeave
             createFromSearch={(options, values, search) => {
               const labels = values.map(value => value.label);
 
               if (
-                search.trim().length == 0 || labels.indexOf(search.trim()) != -1
+                search.trim().length === 0 ||
+                  labels.indexOf(search.trim()) !== -1
               ) {
                 return null;
               }
 
-              return {
-                label: search.trim(),
-                value: search.trim(),
-              };
+              return { label: search.trim(), value: search.trim() };
             }}
           />
         </div>
@@ -90,13 +94,11 @@ class WordCard extends Component {
 }
 
 function mapStateToProps(state, props) {
-  console.log(props);
-  return {
-    entry: state.dictionary[props.word] || {},
-  };
+  return { entry: state.dictionary[props.word] || {} };
 }
 
 export default connect(mapStateToProps, {
+  updateTags,
   loadDefinition,
-  observedWord,
+  observedWord
 })(WordCard);

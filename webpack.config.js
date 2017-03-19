@@ -10,6 +10,7 @@ const HappyPackPlugin = require('happypack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const PrettierPlugin = require('prettier-webpack-plugin');
 
 const extractAppCSS = new ExtractTextPlugin('app.css');
 const extractContentScriptCSS = new ExtractTextPlugin('contentScript.css');
@@ -25,7 +26,7 @@ const publicPath = '/';
 
 const baseConfig = {
   entry: {
-    app: './app/index.js',
+    app: './src/index.js',
     contentScript: './contentscript/index.js',
   },
 
@@ -37,7 +38,12 @@ const baseConfig = {
 
   module: {
     rules: [
-      { test: /\.jsx?$/, loader: 'happypack/loader?id=js', include: [/app/, /contentscript/, /node_modules/] },
+      {
+        test: /\.jsx?$/,
+        loader: 'happypack/loader?id=js',
+        include: [/src/, /contentscript/, /node_modules/],
+        exclude: [/node_modules\/firebase/],
+      },
       { test: /\.hbs/, loader: 'handlebars-template-loader' },
       {
         test: /\.scss$/,
@@ -48,7 +54,7 @@ const baseConfig = {
       },
       {
         test: /\.scss$/,
-        exclude: /app\/.*\.scss$/,
+        exclude: /src\/.*\.scss$/,
         use: extractContentScriptCSS.extract({
           use: ['css-loader', 'postcss-loader', 'sass-loader'],
         }),
@@ -63,6 +69,7 @@ const baseConfig = {
       __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
       'process.env.NODE_ENV': target === TARGET.DEV ? '"dev"' : '"production"',
     }),
+    new PrettierPlugin({}),
     new HappyPackPlugin({
       id: 'js',
       loaders: [{
