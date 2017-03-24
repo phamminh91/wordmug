@@ -1,6 +1,6 @@
-import * as type from "../actionType";
+import * as type from '../actionType';
 
-const init = { currentWord: "", impression: {} };
+const init = { currentWord: '', impression: {} };
 
 export default function(state = init, action) {
   switch (action.type) {

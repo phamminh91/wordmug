@@ -1,4 +1,4 @@
-import * as types from "../actionType";
+import * as types from '../actionType';
 
 const init = {};
 
@@ -13,15 +13,15 @@ export default function dictionary(state = init, action) {
           [action.word]: {
             type: first.type,
             definition: stripHtmlTags(first.defenition),
-            example: stripHtmlTags(first.example)
-          }
+            example: stripHtmlTags(first.example),
+          },
         };
       }
       return state;
     }
 
     case types.GET_TAGS_REQ.OK: {
-      console.log("reducer:tags", action);
+      console.log('reducer:tags', action);
       return state;
     }
 
@@ -53,7 +53,7 @@ export default function dictionary(state = init, action) {
 //   return state;
 // }
 function stripHtmlTags(text) {
-  const div = document.createElement("div");
+  const div = document.createElement('div');
   div.innerHTML = text;
-  return div.textContent || div.innerText || "";
+  return div.textContent || div.innerText || '';
 }

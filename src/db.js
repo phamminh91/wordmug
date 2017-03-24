@@ -1,12 +1,12 @@
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 
 // initialize firebase
 const config = {
-  apiKey: "AIzaSyAXe19cAYaB_ZlxpcYeoma9P-cu3m31dxM",
-  authDomain: "wordmug-75c35.firebaseapp.com",
-  databaseURL: "https://wordmug-75c35.firebaseio.com",
-  storageBucket: "wordmug-75c35.appspot.com",
-  messagingSenderId: "676553309545"
+  apiKey: 'AIzaSyAXe19cAYaB_ZlxpcYeoma9P-cu3m31dxM',
+  authDomain: 'wordmug-75c35.firebaseapp.com',
+  databaseURL: 'https://wordmug-75c35.firebaseio.com',
+  storageBucket: 'wordmug-75c35.appspot.com',
+  messagingSenderId: '676553309545',
 };
 const firebaseApp = firebase.initializeApp(config);
 export const firebaseDb = firebaseApp.database();
@@ -31,13 +31,11 @@ function getLocal(key) {
   // ]);
 }
 
-function setSync(key, value) {
-}
+function setSync(key, value) {}
 
-function getSync(key) {
-}
+function getSync(key) {}
 
 export default {
   local: { set: setLocal, get: getLocal },
-  sync: { set: setSync, get: getSync }
+  sync: { set: setSync, get: getSync },
 };

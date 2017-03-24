@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { MultiSelect } from "react-selectize";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { MultiSelect } from 'react-selectize';
 
-import ProgressBar from "./ProgressBar.jsx";
-import { updateTags, loadDefinition, observedWord } from "../action";
+import ProgressBar from './ProgressBar.jsx';
+import { updateTagsReq, loadDefinitionReq, observedWordReq } from '../action';
 
 const observeDuration = 6000;
 
@@ -21,12 +21,13 @@ class WordCard extends Component {
       this._progressBar && this._progressBar.go(80);
       this._timeoutId = setTimeout(
         () => observedWord(nProps.word),
-        observeDuration
+        observeDuration,
       );
     }
   }
 
   render() {
+    console.log('card');
     const { entry, word, updateTags } = this.props;
     if (!word) return null;
 
@@ -39,26 +40,23 @@ class WordCard extends Component {
           <div className="word__pos">{entry.type}</div>
         </div>
         <div className="word__definition">
-          {entry.definition || "loading..."}
+          {entry.definition || 'loading...'}
         </div>
-        {
-          !!entry.example && (
-              <div className="word__example">
-                {entry.example}
-              </div>
-            )
-        }
+        {!!entry.example &&
+          <div className="word__example">
+            {entry.example}
+          </div>}
         <div className="word__tags">
           <MultiSelect
             placeholder="Select categories"
-            options={[ "emotion", "relationship", "action" ].map(tag => ({
+            options={['emotion', 'relationship', 'action'].map(tag => ({
               label: tag,
-              value: tag
+              value: tag,
             }))}
             autoFocus={false}
             maxValues={3}
             onValuesChange={items => {
-              console.log("val changed", items);
+              console.log('val changed', items);
               updateTags(word, items.map(item => item.value));
             }}
             transitionEnter
@@ -68,7 +66,7 @@ class WordCard extends Component {
 
               if (
                 search.trim().length === 0 ||
-                  labels.indexOf(search.trim()) !== -1
+                labels.indexOf(search.trim()) !== -1
               ) {
                 return null;
               }
@@ -98,7 +96,7 @@ function mapStateToProps(state, props) {
 }
 
 export default connect(mapStateToProps, {
-  updateTags,
-  loadDefinition,
-  observedWord
+  updateTags: updateTagsReq.req,
+  loadDefinition: loadDefinitionReq.req,
+  observedWord: observedWordReq.req,
 })(WordCard);

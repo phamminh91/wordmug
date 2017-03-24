@@ -10,7 +10,6 @@ const HappyPackPlugin = require('happypack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
-const PrettierPlugin = require('prettier-webpack-plugin');
 
 const extractAppCSS = new ExtractTextPlugin('app.css');
 const extractContentScriptCSS = new ExtractTextPlugin('contentScript.css');
@@ -69,7 +68,6 @@ const baseConfig = {
       __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
       'process.env.NODE_ENV': target === TARGET.DEV ? '"dev"' : '"production"',
     }),
-    new PrettierPlugin({}),
     new HappyPackPlugin({
       id: 'js',
       loaders: [{

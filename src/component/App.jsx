@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import WordCard from "./WordCard.jsx";
-import { chooseWord } from "../action";
+import WordCard from './WordCard.jsx';
+import { chooseWordReq } from '../action';
 
 class App extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class App extends Component {
   componentWillMount() {
     this.props.chooseWord();
     this.handleKeyUp = this.handleKeyUp.bind(this);
-    document.addEventListener("keyup", this.handleKeyUp);
+    document.addEventListener('keyup', this.handleKeyUp);
   }
 
   render() {
@@ -34,4 +34,4 @@ function mapStateToProps(state) {
   return { progress: state.progress };
 }
 
-export default connect(mapStateToProps, { chooseWord })(App);
+export default connect(mapStateToProps, { chooseWord: chooseWordReq.req })(App);

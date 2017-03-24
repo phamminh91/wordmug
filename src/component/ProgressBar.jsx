@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 class ProgressBar extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class ProgressBar extends React.Component {
   }
 
   go(progress) {
-    console.log("progressing");
+    console.log('progressing');
     this.targetProgress = progress;
 
     if (!this.animating) {
@@ -31,13 +31,6 @@ class ProgressBar extends React.Component {
       requestAnimationFrame(step);
       this.animating = true;
     }
-  }
-
-  /**
-   * return true if the progress bar is currently loading
-   */
-  isLoading() {
-    return this.progress !== 0 && this.progress !== 100;
   }
 
   render() {
