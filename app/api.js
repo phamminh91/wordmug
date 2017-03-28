@@ -1,5 +1,3 @@
-import fetch from 'unfetch';
-
 const oxfordAppId = '06c8d114';
 const oxfordAppKey = 'ffde054d0d7f6e57dd3019c5bdb5bced';
 const oxfordApiUrl = 'https://od-api.oxforddictionaries.com/api/v1/entries/en';

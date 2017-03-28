@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MultiSelect } from 'react-selectize';
+// import { MultiSelect } from 'react-selectize';
 
 import { loadDefinition, observedWord } from '../action';
 
@@ -44,31 +44,6 @@ class WordCard extends Component {
             {entry.example}
           </div>}
         <div className="word__tags">
-          <MultiSelect
-            placeholder="Select categories"
-            options={['emotion', 'relationship', 'action'].map(fruit => ({
-              label: fruit,
-              value: fruit,
-            }))}
-            autoFocus={false}
-            maxValues={5}
-            onValuesChange={() => {}}
-            transitionEnter={true}
-            transitionLeave={true}
-            createFromSearch={(options, values, search) => {
-              const labels = values.map(value => value.label);
-
-              if (
-                search.trim().length == 0 || labels.indexOf(search.trim()) != -1
-              )
-                return null;
-
-              return {
-                label: search.trim(),
-                value: search.trim(),
-              };
-            }}
-          />
         </div>
       </div>
     );
