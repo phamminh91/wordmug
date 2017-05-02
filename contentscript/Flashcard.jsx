@@ -1,5 +1,4 @@
 import React from "react";
-import { Motion } from "react-motion";
 
 export default class Flashcard extends React.Component {
   constructor(props) {
